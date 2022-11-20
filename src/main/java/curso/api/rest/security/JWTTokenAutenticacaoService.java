@@ -3,11 +3,9 @@ package curso.api.rest.security;
 import java.io.IOException;
 import java.util.Date;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -18,7 +16,6 @@ import curso.api.rest.model.Usuario;
 import curso.api.rest.repository.UsuarioRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-
 @Service
 @Component
 public class JWTTokenAutenticacaoService {
@@ -38,7 +35,7 @@ public class JWTTokenAutenticacaoService {
 		String JWT = Jwts.builder()
 				.setSubject(username)
 				.setExpiration(new Date(System.currentTimeMillis()+ EXPIRATION_TIME))
-				.signWith(SignatureAlgorithm.ES512, SECRET).compact();
+				.signWith(SignatureAlgorithm.HS512, SECRET).compact();
 		
 		String token = TOKEN_PREFIX + " " + JWT;
 		
@@ -58,7 +55,8 @@ public class JWTTokenAutenticacaoService {
 					.parseClaimsJwt(token.replace(TOKEN_PREFIX, ""))
 					.getBody().getSubject();
 			if(user != null) {
-				Usuario usuario = ApplicationContextLoad.getApplicationContext().getBean(UsuarioRepository.class).findUserByLogin(user);
+				Usuario usuario = ApplicationContextLoad.getApplicationContext()
+						.getBean(UsuarioRepository.class).findUserByLogin(user);
 				
 				if(usuario != null) {
 					return new UsernamePasswordAuthenticationToken(
@@ -69,5 +67,6 @@ public class JWTTokenAutenticacaoService {
 			}
 		}
 		return null;
-	}
+	
+}
 }

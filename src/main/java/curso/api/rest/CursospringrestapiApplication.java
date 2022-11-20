@@ -32,7 +32,7 @@ public class CursospringrestapiApplication implements WebMvcConfigurer {
 	public void addCorsMappings(CorsRegistry registry) {
 		
 		
-		registry.addMapping("/usuario/**")
+		registry.addMapping("/usuarios/**")
 		.allowedMethods("*")
 		.allowedOrigins("*");
 	}
