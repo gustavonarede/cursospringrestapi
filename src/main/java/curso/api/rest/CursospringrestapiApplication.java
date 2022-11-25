@@ -25,14 +25,17 @@ public class CursospringrestapiApplication implements WebMvcConfigurer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursospringrestapiApplication.class, args);
-		System.out.println(new BCryptPasswordEncoder().encode("123"));
+	    System.out.println(new BCryptPasswordEncoder().encode("123"));
+	    //$2a$10$qIiW/C31o0FTuDUiJyJGiu.099WDkFWTHyDmbWOM9lXFq6bZKWlVG
+	   
+
 	}
 
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		
 		
-		registry.addMapping("/usuarios/**")
+		registry.addMapping("/usuario/**")
 		.allowedMethods("*")
 		.allowedOrigins("*");
 	}

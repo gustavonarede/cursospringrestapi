@@ -48,11 +48,14 @@ public class JWTTokenAutenticacaoService {
 	
 	public Authentication getAuthentication(HttpServletRequest request) {
 		
-		String token = request.getHeader(HEADER_STRING);
+		
+		String token = request.getHeader(HEADER_STRING); 
+		
 		
 		if(token != null) {
 			String user = Jwts.parser().setSigningKey(SECRET)
-					.parseClaimsJwt(token.replace(TOKEN_PREFIX, ""))
+					
+					.parseClaimsJws(token.replace(TOKEN_PREFIX, "")) 
 					.getBody().getSubject();
 			if(user != null) {
 				Usuario usuario = ApplicationContextLoad.getApplicationContext()
